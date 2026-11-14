@@ -579,10 +579,6 @@
         items.forEach(function(s, i){
           setTimeout(function(){ s.className = 'status disputed'; s.innerHTML = checkSvg + 'Disputed'; }, reduce ? 0 : 900 + i * 900);
         });
-        if (!reduce) setTimeout(function(){
-          items.forEach(function(s){ s.className = 'status review'; s.textContent = 'Under review'; });
-          setTimeout(flip, 900);
-        }, 900 + items.length * 900 + 3800);
       }
       flip();
     }
