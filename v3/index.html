@@ -57,6 +57,18 @@
   .nav-right .free{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
   .nav .btn{padding:12px 18px;font-size:14px}
 
+  /* language */
+  .lang{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:3px}
+  .lang button{font:600 13px/1 var(--sans);color:var(--muted);background:none;border:0;padding:9px 12px;border-radius:999px;cursor:pointer;min-width:44px;transition:background .2s,color .2s}
+  .lang button[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .es-chip{display:inline-flex;align-items:center;gap:8px;font:500 14px/1.2 var(--sans);color:var(--ink);background:var(--white);border:1.5px solid var(--ink);padding:7px 14px 7px 8px;border-radius:999px;cursor:pointer;transition:background .2s}
+  .es-chip:hover{background:var(--paper)}
+  .es-chip .flag{font:700 11px/1 var(--sans);background:var(--mint);color:var(--ink);padding:5px 7px;border-radius:999px}
+  .es-chip u{text-underline-offset:3px}
+  html[lang="es"] .only-en, html[lang="en"] .only-es{display:none}
+  html[lang="es"] .hero h1{font-size:clamp(46px,5.4vw,78px)}
+
   /* hero */
   .hero{position:relative;padding:44px 0 72px;overflow:hidden}
   .hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle, rgba(127,227,166,.35), rgba(127,227,166,0) 62%);pointer-events:none;filter:blur(10px)}
@@ -278,6 +290,7 @@
     .reviews{grid-template-columns:1fr}
     section{padding:80px 0}
     .nav-right .free{display:none}
+    .nav-right{gap:10px}
   }
   @media (max-width:560px){
     body{font-size:16px}
@@ -290,6 +303,7 @@
     .row{grid-template-columns:1fr;gap:0}
     .fixes,.shots{grid-template-columns:1fr}
     .brand span{display:none}
+    .lang button{padding:9px 10px;min-width:40px}
     .nav .btn{padding:11px 15px}
     .final{margin:0 10px 10px;padding:72px 18px;border-radius:26px}
     summary{font-size:23px}
@@ -313,6 +327,7 @@
       <span>PROLIFIC FINANCIALS</span>
     </a>
     <div class="nav-right">
+      <div class="lang" role="group" aria-label="Language / Idioma" data-no-i18n><button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button><button type="button" data-lang="es" aria-pressed="false" lang="es">ES</button></div>
       <span class="free"><span class="tick" style="width:18px;height:18px"><svg viewBox="0 0 12 12"><path d="M2.5 6.3 L5 8.6 L9.5 3.6" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Free, no obligation</span>
       <a href="#top" class="btn btn-ink" data-start>Start free analysis</a>
     </div>
@@ -325,7 +340,11 @@
   <div class="hero" id="top">
     <div class="wrap">
       <div class="hero-copy">
-        <span class="pill"><span class="live"></span>Free analysis in about 60 seconds</span>
+        <div class="hero-tags">
+          <span class="pill"><span class="live"></span>Free analysis in about 60 seconds</span>
+          <button type="button" class="es-chip only-en" data-lang="es" lang="es" data-no-i18n><span class="flag">ES</span>Hablamos español. <u>Ver en español</u></button>
+          <button type="button" class="es-chip only-es" data-lang="en" lang="en" data-no-i18n><span class="flag">EN</span>Hablamos español. <u>View in English</u></button>
+        </div>
         <h1><span class="line"><span>Your credit,</span></span><span class="line"><span>cleaned up and</span></span><span class="line"><span>ready to go.</span></span></h1>
         <p class="lede">We find the errors holding your score back, dispute them for you, and give you a plan to get approved for the home, car, or loan you want.</p>
         <ul class="proof">
@@ -346,6 +365,7 @@
         <form class="card" id="leadForm" name="free-analysis" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
           <input type="hidden" name="form-name" value="free-analysis">
           <input type="hidden" name="page_version" value="v3">
+          <input type="hidden" name="language" id="langField" value="English">
           <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
 
           <div id="formBody">
@@ -549,6 +569,7 @@
     <div class="fbrand"><img src="assets/mono-black.png" alt="" width="26" height="28"><b>Prolific Financials</b></div>
     <p>Prolific Financials is a credit repair organization, not a lender, and does not offer loans or credit. We do not guarantee any specific outcome or increase to your credit score. Results vary depending on each person's credit history.</p>
     <p>You have the right to dispute inaccurate information in your credit report by contacting the credit bureau directly, at no cost. Neither you nor any credit repair company has the right to have accurate, current, and verifiable information removed from your credit report.</p>
+    <p data-no-i18n><b>Hablamos español.</b> Atendemos a nuestros clientes en inglés y en español.</p>
     <p>&copy; <span id="yr">2026</span> Prolific Financials. All rights reserved.</p>
   </div>
 </footer>
@@ -557,6 +578,55 @@
 
 <script>
   document.documentElement.classList.add('js');
+  /* ===== Language: English / Español ===== */
+  var ES = {"Free, no obligation": "Gratis, sin compromiso", "Start free analysis": "Empezar análisis gratis", "Free analysis in about 60 seconds": "Análisis gratis en unos 60 segundos", "Your credit,": "Su crédito,", "cleaned up and": "en orden y", "ready to go.": "listo para avanzar.", "We find the errors holding your score back, dispute them for you, and give you a plan to get approved for the home, car, or loan you want.": "Encontramos los errores que están bajando su puntaje, los disputamos por usted y le damos un plan para que lo aprueben para la casa, el carro o el préstamo que quiere.", "No cost and no obligation": "Sin costo y sin compromiso", "Won't lower your credit score": "No baja su puntaje de crédito", "No Social Security number to get started": "No necesita su número de Seguro Social para empezar", "Your credit report": "Su reporte de crédito", "Example": "Ejemplo", "Late payment": "Pago atrasado", "Auto loan, reported 30 days late": "Préstamo de auto, reportado con 30 días de atraso", "Under review": "En revisión", "Collection account": "Cuenta en cobranza", "Medical, balance doesn't match": "Deuda médica, el saldo no coincide", "Hard inquiry": "Consulta de crédito", "Not authorized by you": "Usted no la autorizó", "Illustration of how we track your disputes. Results vary by person.": "Ilustración de cómo damos seguimiento a sus disputas. Los resultados varían según la persona.", "Leave this empty": "Deje esto vacío", "Free credit analysis": "Análisis de crédito gratis", "What are you working toward?": "¿Cuál es su meta?", "Buy a home": "Comprar casa", "Buy a car": "Comprar carro", "Get a loan": "Obtener un préstamo", "Credit card": "Tarjeta de crédito", "Just improve my credit": "Solo mejorar mi crédito", "Where's your score right now?": "¿Cuál es su puntaje ahora?", "Under 550": "Menos de 550", "Not sure": "No sé", "Where should we reach you?": "¿Cómo podemos contactarle?", "First name": "Nombre", "Enter your first name.": "Escriba su nombre.", "Last name": "Apellido", "Enter your last name.": "Escriba su apellido.", "Mobile phone": "Teléfono celular", "Enter a 10-digit phone number.": "Escriba un número de teléfono de 10 dígitos.", "Email": "Correo electrónico", "Enter a valid email address.": "Escriba un correo electrónico válido.", "I agree that Prolific Financials may contact me by call, text, or email about my free credit analysis. Message and data rates may apply. Reply STOP to opt out. Consent isn't required to buy anything.": "Acepto que Prolific Financials me contacte por llamada, mensaje de texto o correo electrónico sobre mi análisis de crédito gratis. Pueden aplicarse tarifas de mensajes y datos. Responda STOP para dejar de recibir mensajes. No es necesario dar su consentimiento para comprar nada.", "Back": "Atrás", "Continue": "Continuar", "Your information is private and never sold.": "Su información es privada y nunca se vende.", "You're all set": "¡Listo!", "We'll reach out within one business day to go over your free credit analysis.": "Le contactaremos dentro de un día hábil para revisar su análisis de crédito gratis.", "Keep an eye on your phone for a call or text from us.": "Esté pendiente de su teléfono: le llamaremos o le enviaremos un mensaje de texto.", "Late payments": "Pagos atrasados", "Collections": "Cobranzas", "Charge-offs": "Cuentas canceladas", "Hard inquiries": "Consultas de crédito", "Repossessions": "Embargos de auto", "Medical debt": "Deudas médicas", "Wrong balances": "Saldos incorrectos", "Duplicate accounts": "Cuentas duplicadas", "What we help you clean up": "Lo que le ayudamos a corregir", "Errors on credit reports are common. Under federal law you can dispute anything inaccurate, incomplete, or unverifiable. We do the work for you.": "Los errores en los reportes de crédito son comunes. Por ley federal, usted puede disputar cualquier información incorrecta, incompleta o que no se pueda verificar. Nosotros hacemos el trabajo por usted.", "Late payments that were reported wrong or don't match your records.": "Pagos atrasados que se reportaron mal o que no coinciden con sus registros.", "Collection accounts that are inaccurate, duplicated, or can't be verified.": "Cuentas en cobranza que son incorrectas, están duplicadas o no se pueden verificar.", "Charged-off accounts with the wrong balance, date, or status.": "Cuentas canceladas como pérdida con un saldo, una fecha o un estado incorrecto.", "Credit checks you never authorized.": "Revisiones de crédito que usted nunca autorizó.", "Building credit": "Construir crédito", "A plan for utilization, payment history, and new accounts that help your score grow.": "Un plan para el uso de su crédito, su historial de pagos y cuentas nuevas que ayuden a subir su puntaje.", "Not sure what's on yours?": "¿No sabe qué hay en su reporte?", "That's what the free analysis is for. We'll walk through it with you.": "Para eso es el análisis gratis. Lo revisamos con usted paso a paso.", "How it works": "Cómo funciona", "Simple, and you're kept in the loop the whole way.": "Es sencillo, y le mantenemos al tanto en todo momento.", "Request your free analysis": "Pida su análisis gratis", "Answer three quick questions. It takes about a minute.": "Responda tres preguntas rápidas. Toma más o menos un minuto.", "Today": "Hoy", "Review your report together": "Revisamos su reporte juntos", "We go through all three bureau reports with you and show you exactly what's holding your score back.": "Revisamos con usted los reportes de las tres agencias de crédito y le mostramos exactamente qué está bajando su puntaje.", "Within 1 business day": "Dentro de 1 día hábil", "We dispute the errors": "Disputamos los errores", "We challenge inaccurate items with the credit bureaus and creditors on your behalf.": "Disputamos la información incorrecta ante las agencias de crédito y los acreedores en su nombre.", "Bureaus generally respond in about 30 days": "Las agencias suelen responder en unos 30 días", "Track your progress": "Siga su progreso", "You get updates as results come in, plus guidance to keep building toward your goal.": "Le informamos a medida que llegan los resultados y le damos consejos para seguir avanzando hacia su meta.", "Ongoing": "Continuo", "See what a better score can open up": "Vea lo que un mejor puntaje le puede abrir", "Lenders sort people by score. Moving up even one bracket can change what you qualify for and what you pay.": "Los prestamistas clasifican a las personas según su puntaje. Subir aunque sea un nivel puede cambiar para qué califica y cuánto paga.", "Drag your score": "Mueva su puntaje", "Drag the dial": "Deslice el indicador", "Poor": "Malo", "Credit score": "Puntaje de crédito", "FHA home loan, 3.5% down": "Préstamo FHA para casa, 3.5% de enganche", "Conventional home loan": "Préstamo convencional para casa", "Prime auto loan rates": "Tasas preferenciales para préstamos de auto", "Best rates on most loans": "Las mejores tasas en la mayoría de los préstamos", "General lender guidelines for illustration. Requirements vary by lender and loan program.": "Pautas generales de los prestamistas, solo como ilustración. Los requisitos varían según el prestamista y el programa de préstamo.", "Owner photo goes here": "Aquí va la foto del dueño", "A real face builds more trust than anything else on the page.": "Una cara real genera más confianza que cualquier otra cosa en la página.", "A real person in your corner": "Una persona real de su lado", "You won't be handed off to a call center. You'll work with someone who knows your file, answers your texts, and walks you through every step.": "No le vamos a pasar a un centro de llamadas. Trabajará con alguien que conoce su caso, contesta sus mensajes y le acompaña en cada paso.", "Founder, Prolific Financials": "Fundador, Prolific Financials", "We never charge you before the work is done.": "Nunca le cobramos antes de terminar el trabajo.", "We'll tell you honestly what we can and can't help with.": "Le diremos con honestidad en qué podemos ayudarle y en qué no.", "Your information stays private and is never sold.": "Su información se mantiene privada y nunca se vende.", "What our clients say": "Lo que dicen nuestros clientes", "[Client review goes here]": "[Aquí va la reseña del cliente]", "[Client first name, city]": "[Nombre del cliente, ciudad]", "Common questions": "Preguntas frecuentes", "Is the credit analysis really free?": "¿De verdad es gratis el análisis de crédito?", "Yes. The analysis is free and you're under no obligation to sign up for anything afterward.": "Sí. El análisis es gratis y no tiene ninguna obligación de contratar nada después.", "Will this hurt my credit score?": "¿Esto afectará mi puntaje de crédito?", "No. Reviewing your own credit report doesn't affect your score.": "No. Revisar su propio reporte de crédito no afecta su puntaje.", "Can you guarantee my score will go up?": "¿Pueden garantizar que mi puntaje va a subir?", "No one can honestly guarantee a specific result. What we can do is find inaccurate, incomplete, or unverifiable items on your report, challenge them, and give you a clear plan to build stronger credit.": "Nadie puede garantizar con honestidad un resultado específico. Lo que sí podemos hacer es encontrar información incorrecta, incompleta o que no se pueda verificar en su reporte, disputarla y darle un plan claro para construir un mejor crédito.", "How long does it take?": "¿Cuánto tiempo toma?", "It depends on your credit file. Credit bureaus generally have about 30 days to respond to a dispute, and many clients work with us over several months.": "Depende de su historial de crédito. Las agencias de crédito generalmente tienen unos 30 días para responder a una disputa, y muchos clientes trabajan con nosotros durante varios meses.", "Can I dispute errors myself?": "¿Puedo disputar los errores por mi cuenta?", "Yes. You have the right to dispute inaccurate information directly with the credit bureaus at no cost. We do the research, paperwork, and follow-up for you so you don't have to.": "Sí. Usted tiene derecho a disputar información incorrecta directamente con las agencias de crédito, sin costo. Nosotros hacemos la investigación, el papeleo y el seguimiento para que usted no tenga que hacerlo.", "Find out what's holding your credit back.": "Descubra qué está frenando su crédito.", "Start my free analysis": "Empezar mi análisis gratis", "Free. About 60 seconds. No Social Security number needed.": "Gratis. Unos 60 segundos. No necesita su número de Seguro Social.", "Prolific Financials is a credit repair organization, not a lender, and does not offer loans or credit. We do not guarantee any specific outcome or increase to your credit score. Results vary depending on each person's credit history.": "Prolific Financials es una organización de reparación de crédito, no un prestamista, y no ofrece préstamos ni crédito. No garantizamos ningún resultado específico ni un aumento en su puntaje de crédito. Los resultados varían según el historial de crédito de cada persona.", "You have the right to dispute inaccurate information in your credit report by contacting the credit bureau directly, at no cost. Neither you nor any credit repair company has the right to have accurate, current, and verifiable information removed from your credit report.": "Usted tiene derecho a disputar información incorrecta en su reporte de crédito comunicándose directamente con la agencia de crédito, sin costo. Ni usted ni ninguna compañía de reparación de crédito tiene derecho a que se elimine de su reporte de crédito información correcta, actual y verificable.", "Prolific Financials. All rights reserved.": "Prolific Financials. Todos los derechos reservados.", "Prolific Financials home": "Inicio de Prolific Financials", "Hand holding a house key in front of a new home. Text: Home ownership is within reach.": "Mano sosteniendo la llave de una casa frente a una casa nueva. Texto en inglés: ser dueño de casa está a su alcance.", "Hand holding a car key in front of a black SUV at a dealership. Text: Get ready for the car you want.": "Mano sosteniendo la llave de un carro frente a una camioneta negra en una agencia. Texto en inglés: prepárese para el carro que quiere.", "Prolific Financials | Free Credit Analysis": "Prolific Financials | Análisis de crédito gratis", "Find out what's holding your credit back. Prolific Financials reviews your report for free and disputes the errors for you, so you can get ready for a home, car, or loan.": "Descubra qué está frenando su crédito. Prolific Financials revisa su reporte gratis y disputa los errores por usted, para que pueda prepararse para una casa, un carro o un préstamo."};
+  var UI = {"step": ["Step {n} of 3", "Paso {n} de 3"], "continue": ["Continue", "Continuar"], "submit": ["Get my free analysis", "Obtener mi análisis gratis"], "sending": ["Sending...", "Enviando..."], "warnGoal": ["Pick what you're working toward.", "Elija su meta."], "warnScore": ["Pick a range, or choose \"Not sure\".", "Elija un rango, o seleccione \"No sé\"."], "warnConsent": ["Check the box so we can contact you about your free analysis.", "Marque la casilla para que podamos contactarle sobre su análisis gratis."], "warnFail": ["Your request didn't go through. Check your connection and try again.", "Su solicitud no se envió. Revise su conexión e inténtelo de nuevo."], "disputed": ["Disputed", "Disputado"], "review": ["Under review", "En revisión"], "bands": [["Poor", "Fair", "Good", "Very good", "Exceptional"], ["Malo", "Regular", "Bueno", "Muy bueno", "Excelente"]]};
+  var LANG = 'en';
+  function t(key, vars){ var v = UI[key][LANG === 'es' ? 1 : 0]; if (vars) for (var k in vars) v = v.replace('{' + k + '}', vars[k]); return v; }
+  var onLangChange = [];
+  function norm(x){ return x.replace(/\s+/g, ' ').trim(); }
+  function swapText(original){
+    var key = norm(original);
+    if (LANG !== 'es' || !ES[key]) return original;
+    var lead = original.match(/^\s*/)[0], trail = original.match(/\s*$/)[0];
+    return lead + ES[key] + trail;
+  }
+  function applyLang(lang, save){
+    LANG = lang === 'es' ? 'es' : 'en';
+    document.documentElement.lang = LANG;
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: function(n){
+      var el = n.parentElement;
+      if (!el || el.closest('script,style,[data-no-i18n]')) return NodeFilter.FILTER_REJECT;
+      return n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }});
+    var nodes = [], n; while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(function(node){
+      if (node.__en === undefined) node.__en = node.nodeValue;
+      node.nodeValue = swapText(node.__en);
+    });
+    document.querySelectorAll('[alt],[placeholder],[aria-label]').forEach(function(el){
+      if (el.closest('[data-no-i18n]')) return;
+      ['alt','placeholder','aria-label'].forEach(function(a){
+        if (!el.hasAttribute(a)) return;
+        var store = 'data-en-' + a;
+        if (!el.hasAttribute(store)) el.setAttribute(store, el.getAttribute(a));
+        el.setAttribute(a, swapText(el.getAttribute(store)));
+      });
+    });
+    if (!document.__enTitle) document.__enTitle = document.title;
+    document.title = swapText(document.__enTitle);
+    var md = document.querySelector('meta[name=description]');
+    if (!md.__en) md.__en = md.content;
+    md.content = swapText(md.__en);
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === LANG)); });
+    var lf = document.getElementById('langField'); if (lf) lf.value = LANG === 'es' ? 'Spanish' : 'English';
+    onLangChange.forEach(function(fn){ fn(); });
+    if (save) { try { localStorage.setItem('pf_lang', LANG); } catch (e) {} }
+  }
+  document.querySelectorAll('[data-lang]').forEach(function(b){
+    b.addEventListener('click', function(){ applyLang(b.dataset.lang, true); });
+  });
+
   document.getElementById('yr').textContent = new Date().getFullYear();
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -577,11 +647,15 @@
       var items = root.querySelectorAll('.ritem .status');
       function flip(){
         items.forEach(function(s, i){
-          setTimeout(function(){ s.className = 'status disputed'; s.innerHTML = checkSvg + 'Disputed'; }, reduce ? 0 : 900 + i * 900);
+          setTimeout(function(){ s.className = 'status disputed'; s.innerHTML = checkSvg + t('disputed'); }, reduce ? 0 : 900 + i * 900);
         });
       }
       flip();
     }
+    onLangChange.push(function(){
+      document.querySelectorAll('.status.disputed').forEach(function(s){ s.innerHTML = checkSvg + t('disputed'); });
+      document.querySelectorAll('.status.review').forEach(function(s){ s.textContent = t('review'); });
+    });
     document.querySelectorAll('.report').forEach(function(r){
       if (r.offsetParent !== null || r.classList.contains('report-mobile')) run(r);
     });
@@ -599,9 +673,9 @@
       step = n;
       panes.forEach(function(p){ p.classList.toggle('on', +p.dataset.pane === n); });
       bars.forEach(function(b, i){ b.classList.toggle('on', i < n); });
-      count.textContent = 'Step ' + n + ' of ' + total;
+      count.textContent = t('step', {n: n});
       backBtn.hidden = n === 1;
-      nextBtn.textContent = n === total ? 'Get my free analysis' : 'Continue';
+      nextBtn.textContent = n === total ? t('submit') : t('continue');
       msg.className = 'form-msg';
       if (n === 3 && window.innerWidth > 760) document.getElementById('first').focus();
     }
@@ -634,13 +708,14 @@
     }
 
     backBtn.addEventListener('click', function(){ show(step - 1); });
+    onLangChange.push(function(){ if (!nextBtn.disabled) show(step); });
     nextBtn.addEventListener('click', function(){
-      if (step === 1) { if (!picked('goal')) return warn('Pick what you\'re working toward.'); return show(2); }
-      if (step === 2) { if (!picked('score_range')) return warn('Pick a range, or choose "Not sure".'); return show(3); }
+      if (step === 1) { if (!picked('goal')) return warn(t('warnGoal')); return show(2); }
+      if (step === 2) { if (!picked('score_range')) return warn(t('warnScore')); return show(3); }
       if (!contactValid()) { var b = form.querySelector('.field.bad input'); if (b) b.focus(); return; }
-      if (!document.getElementById('consent').checked) return warn('Check the box so we can contact you about your free analysis.');
+      if (!document.getElementById('consent').checked) return warn(t('warnConsent'));
 
-      nextBtn.disabled = true; nextBtn.textContent = 'Sending...';
+      nextBtn.disabled = true; nextBtn.textContent = t('sending');
       fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(form)).toString() })
         .then(function(r){
           if (!r.ok) throw new Error('bad status');
@@ -649,8 +724,8 @@
           form.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'});
         })
         .catch(function(){
-          warn('Your request didn\'t go through. Check your connection and try again.');
-          nextBtn.disabled = false; nextBtn.textContent = 'Get my free analysis';
+          warn(t('warnFail'));
+          nextBtn.disabled = false; nextBtn.textContent = t('submit');
         });
     });
     form.addEventListener('submit', function(e){ e.preventDefault(); nextBtn.click(); });
@@ -684,7 +759,8 @@
       l.setAttribute('x1',a[0]); l.setAttribute('y1',a[1]); l.setAttribute('x2',b[0]); l.setAttribute('y2',b[1]);
       l.setAttribute('stroke','#000'); l.setAttribute('stroke-width','2.5'); ticks.appendChild(l);
     });
-    function bandName(v){ return v < 580 ? 'Poor' : v < 670 ? 'Fair' : v < 740 ? 'Good' : v < 800 ? 'Very good' : 'Exceptional'; }
+    function bandName(v){ var b = t('bands'); return v < 580 ? b[0] : v < 670 ? b[1] : v < 740 ? b[2] : v < 800 ? b[3] : b[4]; }
+    onLangChange.push(function(){ paint(+slider.value); });
     function paint(v){
       v = Math.max(MIN, Math.min(MAX, Math.round(v)));
       fill.setAttribute('stroke-dashoffset', (100 - (v - MIN) / (MAX - MIN) * 100).toFixed(2));
@@ -737,6 +813,15 @@
 
     new IntersectionObserver(function(es){ formVisible = es[0].isIntersecting; mbar.classList.toggle('show', !formVisible && window.scrollY > 200); }, {threshold:0.05}).observe(form);
     window.addEventListener('scroll', function(){ mbar.classList.toggle('show', !formVisible && window.scrollY > 200); }, {passive:true});
+  })();
+
+  /* pick the starting language: ?lang=es link, saved choice, then the browser's language */
+  (function(){
+    var q = (location.search.match(/[?&]lang=(en|es)/) || [])[1];
+    var saved = null; try { saved = localStorage.getItem('pf_lang'); } catch (e) {}
+    var browserEs = (navigator.languages || [navigator.language || '']).some(function(l){ return /^es/i.test(l); });
+    var start = q || saved || (browserEs ? 'es' : 'en');
+    if (start === 'es') applyLang('es', !!q);
   })();
 </script>
 </body>
