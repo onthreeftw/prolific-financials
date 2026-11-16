@@ -1,2 +1,12 @@
 [build]
   publish = "."
+
+# Version 3 is now the main page. Old /v3/ links (including ?lang=es) still work.
+[[redirects]]
+  from = "/v3"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/v3/*"
+  to = "/"
+  status = 301
