@@ -369,13 +369,24 @@
       <div class="form-wrap">
         <form class="card" id="leadForm" name="free-analysis" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
           <input type="hidden" name="form-name" value="free-analysis">
-          <input type="hidden" name="page_version" value="v3">
-          <input type="hidden" name="language" id="langField" value="English">
           <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
 
           <div id="formBody">
             <div class="form-top"><h2>Free credit analysis</h2><span class="stepcount" id="stepcount">Step 1 of 3</span></div>
             <div class="bar" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+
+            <div class="pane" data-pane="3">
+              <p class="q">Where should we reach you?</p>
+              <div class="row">
+                <div class="field"><label for="first">First name</label><input id="first" name="first_name" autocomplete="given-name" enterkeyhint="next"><span class="err">Enter your first name.</span></div>
+                <div class="field"><label for="last">Last name</label><input id="last" name="last_name" autocomplete="family-name" enterkeyhint="next"><span class="err">Enter your last name.</span></div>
+              </div>
+              <div class="field"><label for="phone">Mobile phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(210) 555-0123" enterkeyhint="next"><span class="err">Enter a 10-digit phone number.</span></div>
+              <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" enterkeyhint="done"><span class="err">Enter a valid email address.</span></div>
+              <label class="consent"><input type="checkbox" name="agreed_to_be_contacted" value="Yes" id="consent" checked>
+                <span>I agree that Prolific Financials may contact me by call, text, or email about my free credit analysis. Message and data rates may apply. Reply STOP to opt out. Consent isn't required to buy anything.</span>
+              </label>
+            </div>
 
             <div class="pane on" data-pane="1">
               <p class="q">What are you working toward?</p>
@@ -400,19 +411,8 @@
               </div>
             </div>
 
-            <div class="pane" data-pane="3">
-              <p class="q">Where should we reach you?</p>
-              <div class="row">
-                <div class="field"><label for="first">First name</label><input id="first" name="first_name" autocomplete="given-name" enterkeyhint="next"><span class="err">Enter your first name.</span></div>
-                <div class="field"><label for="last">Last name</label><input id="last" name="last_name" autocomplete="family-name" enterkeyhint="next"><span class="err">Enter your last name.</span></div>
-              </div>
-              <div class="field"><label for="phone">Mobile phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(210) 555-0123" enterkeyhint="next"><span class="err">Enter a 10-digit phone number.</span></div>
-              <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" enterkeyhint="done"><span class="err">Enter a valid email address.</span></div>
-              <label class="consent"><input type="checkbox" name="contact_consent" value="yes" id="consent" checked>
-                <span>I agree that Prolific Financials may contact me by call, text, or email about my free credit analysis. Message and data rates may apply. Reply STOP to opt out. Consent isn't required to buy anything.</span>
-              </label>
-            </div>
 
+            <input type="hidden" name="preferred_language" id="langField" value="English">
             <div class="actions">
               <button type="button" class="back" id="backBtn" hidden>Back</button>
               <button type="button" class="btn btn-ink" id="nextBtn">Continue</button>

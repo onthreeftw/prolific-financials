@@ -244,7 +244,6 @@
       <!-- Netlify Forms: submissions go to the "free-analysis" form -->
       <form class="card" id="leadForm" name="free-analysis" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
         <input type="hidden" name="form-name" value="free-analysis">
-        <input type="hidden" name="page_version" value="v2">
         <p class="hp"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
 
         <div id="formBody">
@@ -282,7 +281,7 @@
             </div>
             <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"><span class="err">Enter a 10-digit phone number.</span></div>
             <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email"><span class="err">Enter a valid email address.</span></div>
-            <label class="consent"><input type="checkbox" name="contact_consent" value="yes" id="consent">
+            <label class="consent"><input type="checkbox" name="agreed_to_be_contacted" value="Yes" id="consent">
               <span>I agree that Prolific Financials may contact me by phone call, text message, or email about my free credit analysis. Message and data rates may apply. Reply STOP to opt out.</span>
             </label>
           </div>
